@@ -9,8 +9,6 @@ class model extends CI_Model
         {
             $query = $this->db->query("insert into andamentonazionale values (?,?,?,?,?,?,?,?,?,?,?,?)",$vet);
 
-            //array($vet[0],$vet[1],$vet[2],$vet[3],$vet[4],$vet[5],$vet[6],$vet[7],$vet[8],$vet[9],$vet[10],$vet[11])
-
             $e = $this->db->error();
             if($e['code'] != 0)
             {
@@ -30,8 +28,6 @@ class model extends CI_Model
         {
             $query = $this->db->query("insert into province(data,stato,codice_regione,denominazione_regione,codice_provincia,denominazione_provincia,sigla_provincia,latitudine,longitudine,totale_casi) values (?,?,?,?,?,?,?,?,?,?)",$vet);
 
-            
-
             $e = $this->db->error();
             if($e['code'] != 0)
             {
@@ -50,8 +46,6 @@ class model extends CI_Model
         foreach($array as $vet)
         {
             $query = $this->db->query("insert into regioni(data,stato,codice_regione,denominazione_regione,latitudine,longitudine,ricoverati_con_sintomi,terapia_intensiva,totale_ospedalizzati,isolamento_domiciliare,totale_attualmente_positivi,nuovi_attualmente_positivi,dimessi_guariti,deceduti,totale_casi,tamponi) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",$vet);
-
-            
 
             $e = $this->db->error();
             if($e['code'] != 0)

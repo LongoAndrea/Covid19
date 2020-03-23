@@ -46,6 +46,7 @@ class Welcome extends CI_Controller {
 			$this->load->view('errore');
 		}
 		
+		//preparo i dati per grafico donut
 		$data = $this->model->GetDataNazione();
 		$oggi =  end($data);
 		
@@ -58,6 +59,12 @@ class Welcome extends CI_Controller {
 		
 		$this->load->view('header');
 		$this->load->view('home',$x);
+
+		//dati per mappa
+		$d['data'] = json_encode(file_get_contents('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json'));
+		//$this->load->view('header');
+		$this->load->view('mappa',$d);
+		$this->load->view('footer');
 	}
 
 	public function datiNazionale()
@@ -68,6 +75,7 @@ class Welcome extends CI_Controller {
 		
 		$this->load->view('header');
 		$this->load->view('viewdataNazionale',$x);
+		$this->load->view('footer');
 	}
 
 	public function datiProvice()
@@ -84,6 +92,7 @@ class Welcome extends CI_Controller {
 		$this->load->view('header');
 
 		$this->load->view('selectProvincia',$data);
+		$this->load->view('footer');
 	}
 
 	public function selectProvince()
@@ -95,6 +104,7 @@ class Welcome extends CI_Controller {
 		
 		$this->load->view('header');
 		$this->load->view('viewdataProvince',$x);
+		$this->load->view('footer');
 
 	}
 
@@ -103,6 +113,7 @@ class Welcome extends CI_Controller {
 		$data['dato'] = $this->model->GetRegioni();
 		$this->load->view('header');
 		$this->load->view('selectRegione',$data);
+		$this->load->view('footer');
 
 	}
 
@@ -117,5 +128,6 @@ class Welcome extends CI_Controller {
 		$x['data'] = json_encode($data);
 		$this->load->view('header');
 		$this->load->view('viewdataRegioni',$x);
+		$this->load->view('footer');
 	}
 }

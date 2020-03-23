@@ -5,7 +5,10 @@
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/morris.css'?>">
   </head>
   <body>
-    <h2>Andamento Provincia</h2>
+  <div class="siimple-paragraph siimple--text-center bg-example siimple--bg-light siimple-paragraph siimple--text-bold">
+    <h2 class="siimple-h2">Andamento Provincia</h2>
+</div>
+    
  
     <div id="graph"></div>
  
