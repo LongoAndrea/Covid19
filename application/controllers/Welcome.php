@@ -20,6 +20,7 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
+		/*
 		$json = file_get_contents('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale.json');
 		$obj = json_decode($json,true);
 		
@@ -27,7 +28,14 @@ class Welcome extends CI_Controller {
 		{
 			$this->load->view('errore');
 		}
-			
+		*/	
+		$json = file_get_contents('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json');
+		$obj = json_decode($json,true);
+		
+		if($this->model->InsertDataRegioni($obj)!=NULL)
+		{
+			$this->load->view('errore');
+		}
 
 		$json = file_get_contents('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json');
 		$obj = json_decode($json,true);
@@ -38,13 +46,7 @@ class Welcome extends CI_Controller {
 		}
 
 
-		$json = file_get_contents('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json');
-		$obj = json_decode($json,true);
 		
-		if($this->model->InsertDataRegioni($obj)!=NULL)
-		{
-			$this->load->view('errore');
-		}
 		
 		//preparo i dati per grafico donut
 		$data = $this->model->GetDataNazione();

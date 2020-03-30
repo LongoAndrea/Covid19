@@ -2,11 +2,13 @@
 class model extends CI_Model
 {
     public function InsertDataNazionale($array){
+        
         $errore = NULL;
         $this->db->query("delete from andamentonazionale");
         $this->db->trans_start();
         foreach($array as $vet)
         {
+            $vet = array_slice($vet,0,12);
             $query = $this->db->query("insert into andamentonazionale values (?,?,?,?,?,?,?,?,?,?,?,?)",$vet);
 
             $e = $this->db->error();
@@ -21,12 +23,30 @@ class model extends CI_Model
 
     public function InsertDataProvincia($array){
         $errore = NULL;
-        $this->db->query("delete from province");
+        //$this->db->query("delete from province");
+        for ($i = 0; $i <128; $i++)
+        {
+            $prov[$i] = array();
+            $prov[$i] = $array[$i];
+        }
+        //$prec = array_slice($array[1],1,8);
 
         $this->db->trans_start();
-        foreach($array as $vet)
+        foreach($prov as $vet)
         {
-            $query = $this->db->query("insert into province(data,stato,codice_regione,denominazione_regione,codice_provincia,denominazione_provincia,sigla_provincia,latitudine,longitudine,totale_casi) values (?,?,?,?,?,?,?,?,?,?)",$vet);
+            //$vet = array_slice($vet,1,8);
+            
+            //$dat
+            $d=array();
+            $d[0] = $vet['codice_provincia'];
+            $d[1] = $vet['stato'];
+            $d[2] = $vet['codice_regione'];
+            $d[3] = $vet['denominazione_provincia'];
+            $d[4] = $vet['sigla_provincia'];
+            $d[5] = $vet['lat'];
+            $d[6] = $vet['long'];
+            $query = $this->db->query("insert into provincia values (?,?,?,?,?,?,?)",$d);
+            
 
             $e = $this->db->error();
             if($e['code'] != 0)
@@ -40,18 +60,34 @@ class model extends CI_Model
 
     public function InsertDataRegioni($array){
         $errore = NULL;
-        $this->db->query("delete from regioni");
+        $this->db->query("delete from regione");
+        
+        //$reg = array_slice($array[1],1,8);
+
+        for ($i = 0; $i <21; $i++)
+        {
+            $reg[$i] = array();
+            $reg[$i] = $array[$i];
+        }
+        //$reg = array_slice($array[1],1,8);
 
         $this->db->trans_start();
-        foreach($array as $vet)
-        {
-            $query = $this->db->query("insert into regioni(data,stato,codice_regione,denominazione_regione,latitudine,longitudine,ricoverati_con_sintomi,terapia_intensiva,totale_ospedalizzati,isolamento_domiciliare,totale_attualmente_positivi,nuovi_attualmente_positivi,dimessi_guariti,deceduti,totale_casi,tamponi) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",$vet);
+        foreach($reg as $vet)
+        {   
+            $d=array();
+            $d[0] = $vet['codice_regione'];
+            $d[1] = $vet['denominazione_regione'];
+            $d[2] = $vet['stato'];                             
+            $d[3] = $vet['lat'];
+            $d[4] = $vet['long'];
+            $query = $this->db->query("insert into regione values (?,?,?,?,?)",$d);
 
             $e = $this->db->error();
             if($e['code'] != 0)
             {
-              $errore = $e['message'];
+            $errore = $e['message'];
             }
+            
         }
         $this->db->trans_complete();
         return $errore;
